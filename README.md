@@ -1,0 +1,2 @@
+# gloomwood-autosplit
+Gloomwood autosplitter
