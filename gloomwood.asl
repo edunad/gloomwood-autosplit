@@ -49,6 +49,8 @@ init {
     vars.track.Add(new MemoryWatcher<int>(new DeepPointer(vars.ptrGameStateOffset, 0x628, 0, 0x168, 0x20)) { Name = "state" });
     vars.track.Add(new MemoryWatcher<bool>(new DeepPointer(vars.ptrGameStateOffset, 0x580, 0x250, 0x480)) { Name = "alphaMenuVisible" });
     vars.track.Add(new StringWatcher(new DeepPointer(vars.ptrGameLevelOffset, 0x48, 0x38), 255) { Name = "scene" });
+
+    vars.__old_valid_level = "";
 }
 
 exit {
@@ -60,22 +62,37 @@ isLoading {
 }
 
 start {
-    return vars.track["state"].Current == 3 && vars.track["state"].Old != vars.track["state"].Current;
+    int newState = vars.track["state"].Current;
+    int oldState = vars.track["state"].Old;
+
+    if(oldState == newState) return false;
+    if(newState < 1 || newState > 3 || oldState < 1 || oldState > 3) return false;
+
+    return newState == 3;
 }
 
 update {
     if(vars.track == null) return;
+    if(timer.CurrentPhase != TimerPhase.Running && vars.__old_valid_level != "") vars.__old_valid_level = ""; // Cleanup
+
     vars.track.UpdateAll(game);
 }
 
 split {
-    if(timer.CurrentPhase != TimerPhase.Running) return false;
+    if(vars.track == null || timer.CurrentPhase != TimerPhase.Running) return false;
 
     if(settings["split_level_change"]) {
-        bool validLevel = !vars.track["scene"].Current.Contains("Loading") && !vars.track["scene"].Current.Contains("Title");
-        if(!validLevel && vars.track["scene"].Current != vars.track["scene"].Old) {
-            print("split level");
-            return true;
+        string currLevel = vars.track["scene"].Current;
+        string oldLevel = vars.track["scene"].Old;
+
+        if(oldLevel != currLevel) {
+            bool validLevel = !currLevel.Contains("Loading") && !currLevel.Contains("Title");
+
+            if(validLevel && currLevel != vars.__old_valid_level) {
+                print("[split level] OLD: "+ vars.__old_valid_level + " | NEW: " + currLevel);
+                vars.__old_valid_level = currLevel;
+                return true;
+            }
         }
     }
 
