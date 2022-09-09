@@ -6,7 +6,7 @@
 
     CHANGELOG:
     - Add auto-start
-    - Add split on Alpha menu end
+    - WIP: Add split on Alpha menu end
     - Add split on level change
 */
 
