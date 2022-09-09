@@ -48,7 +48,7 @@ init {
 	vars.track = new MemoryWatcherList();
     vars.track.Add(new MemoryWatcher<int>(new DeepPointer(vars.ptrGameStateOffset, 0x628, 0, 0x168, 0x20)) { Name = "state" });
     vars.track.Add(new MemoryWatcher<bool>(new DeepPointer(vars.ptrGameStateOffset, 0x580, 0x250, 0x480)) { Name = "alphaMenuVisible" });
-    vars.track.Add(new StringWatcher(new DeepPointer(vars.ptrGameLevelOffset, 0x570, 0x38), 255) { Name = "scene" });
+    vars.track.Add(new StringWatcher(new DeepPointer(vars.ptrGameLevelOffset, 0x48, 0x38), 255) { Name = "scene" });
 }
 
 exit {
