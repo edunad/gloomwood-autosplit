@@ -15,7 +15,7 @@
 
 ## CREDITS
 
-- Made by FailCake ([Twitch](https://www.twitch.tv/birbcaw_) | [Github](https://github.com/edunad))
+- Made by FailCake ([Twitch](https://www.twitch.tv/cawquest) | [Github](https://github.com/edunad))
 
 ---
 
