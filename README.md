@@ -4,7 +4,10 @@
 
 ## FEATURES
 
-- TODO
+- Auto-start
+- Pause on loading
+- Split on level change
+- [EXPERIMENTAL] Split on alpha menu
 
 <br>
 
@@ -29,10 +32,10 @@
 
 4. Put the path to the script
 
-   ![](https://i.rawr.dev/XMjfznJZfN.png)
+   ![](https://i.rawr.dev/ZpYD3maqlz.png)
 
 5. Edit the options on "Advanced"
 
-   ![](https://i.rawr.dev/qnmcXGOY7y.png)
+   ![](https://i.rawr.dev/pYbQTng6Gu.png)
 
 ---
