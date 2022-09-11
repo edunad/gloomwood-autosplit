@@ -1,11 +1,12 @@
 /*  Gloomwood Autosplitter
-    v0.0.2 --- By FailCake (edunad)
+    v0.0.3 --- By FailCake (edunad)
 
     GAME VERSIONS:
     - v0.1.216 = 29822976
 
     CHANGELOG:
-    - Code refactor
+    - Add settings_pause_timer_load setting
+    - Made splits on by default
 */
 
 
@@ -17,9 +18,12 @@ state("Gloomwood", "0.1.216") {
 
 startup {
     // Settings
+    settings.Add("settings", true, "Settings");
+    settings.Add("settings_pause_timer_load", true, "Pause timer on loading", "settings");
+
     settings.Add("split", true, "Splits");
-    settings.Add("split_level_change", false, "Level change", "split");
-    settings.Add("split_alpha_end", false, "[Experimental] Alpha End", "split");
+    settings.Add("split_level_change", true, "Level change", "split");
+    settings.Add("split_alpha_end", true, "[Experimental] Alpha End", "split");
 }
 
 init {
@@ -33,6 +37,8 @@ init {
     if (mdlSize == 29822976) {
         version = "0.1.216";
     } else {
+        version = "UNKNOWN";
+
         print("[WARNING] Invalid Gloomwood game version");
         return;
     }
@@ -46,7 +52,7 @@ exit {
 }
 
 isLoading {
-    return current.state == 2;
+    return settings["settings_pause_timer_load"] && current.state == 2;
 }
 
 start {
