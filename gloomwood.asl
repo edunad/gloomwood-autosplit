@@ -1,19 +1,18 @@
 /*  Gloomwood Autosplitter
-    v0.0.3 --- By FailCake (edunad)
+    v0.0.4 --- By FailCake (edunad)
 
     GAME VERSIONS:
-    - v0.1.216 = 29822976
+    - v0.1.217 = 29822976
 
     CHANGELOG:
-    - Add settings_pause_timer_load setting
-    - Made splits on by default
+    - Fix pointers for the new update
 */
 
 
-state("Gloomwood", "0.1.216") {
-    int state : "UnityPlayer.dll", 0x01AADAF0, 0xD0, 0x8, 0x318, 0x20;
+state("Gloomwood", "0.1.217") {
+    int state : "UnityPlayer.dll", 0x01A00D40, 0xB0, 0x30, 0xFF0;
     string100 scene : "UnityPlayer.dll", 0x01A9C0F0, 0x48, 0x38;
-    bool alphaMenuVisible : "UnityPlayer.dll", 0x01AD09B0, 0x1F8, 0x608, 0x230, 0x480;
+    int alphaMenuVisible : "UnityPlayer.dll", 0x01A55B90, 0x550, 0x110, 0x18, 0x18, 0, 0x18, 0xF58;
 }
 
 startup {
@@ -35,7 +34,7 @@ init {
     var mdlSize = vars.gameAssembly.ModuleMemorySize;
     print("[INFO] Gloomwood assembly version: " + mdlSize);
     if (mdlSize == 29822976) {
-        version = "0.1.216";
+        version = "0.1.217";
     } else {
         version = "UNKNOWN";
 
@@ -88,7 +87,7 @@ split {
     }
 
     if(settings["split_alpha_end"] && current.alphaMenuVisible != null) {
-        if(current.alphaMenuVisible != old.alphaMenuVisible && current.alphaMenuVisible) {
+        if(current.alphaMenuVisible != old.alphaMenuVisible && current.alphaMenuVisible == 1) {
             print("alpha end");
             return true;
         }
