@@ -1,18 +1,18 @@
 /*  Gloomwood Autosplitter
-    v0.0.4 --- By FailCake (edunad)
+    v0.0.5 --- By FailCake (edunad)
 
     GAME VERSIONS:
     - v0.1.217 = 29822976
 
     CHANGELOG:
-    - Fix pointers for the new update
+    - Fix alpha menu pointer
 */
 
 
 state("Gloomwood", "0.1.217") {
     int state : "UnityPlayer.dll", 0x01A00D40, 0xB0, 0x30, 0xFF0;
     string100 scene : "UnityPlayer.dll", 0x01A9C0F0, 0x48, 0x38;
-    int alphaMenuVisible : "UnityPlayer.dll", 0x01A55B90, 0x550, 0x110, 0x18, 0x18, 0, 0x18, 0xF58;
+    int alphaMenuVisible : "UnityPlayer.dll", 0x01A986F0, 0x18, 0, 0x10, 0x220, 0x8, 0xF58;
 }
 
 startup {

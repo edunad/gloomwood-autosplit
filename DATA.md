@@ -16,7 +16,7 @@ public enum GameStates
 Levels
 
 ```
-Level_Coast_Fishery
-Level_Coast_Caves
-Level_Coast_Cliffside
+Coast_Fishery
+Coast_Caves
+Coast_Cliffside
 ```
