@@ -1,11 +1,11 @@
 /*  Gloomwood Autosplitter
-    v0.0.5 --- By FailCake (edunad)
+    v0.0.6 --- By FailCake (edunad)
 
     GAME VERSIONS:
     - v0.1.217 = 29822976
 
     CHANGELOG:
-    - Fix alpha menu pointer
+    - Improve area splitting
 */
 
 
@@ -22,7 +22,10 @@ startup {
 
     settings.Add("split", true, "Splits");
     settings.Add("split_level_change", true, "Level change", "split");
-    settings.Add("split_alpha_end", true, "[Experimental] Alpha End", "split");
+    settings.Add("split_alpha_end", true, "Alpha End", "split");
+
+    settings.Add("reset", true, "Reset");
+    settings.Add("reset_mainmenu", false, "On mainmenu", "reset");
 }
 
 init {
@@ -54,6 +57,10 @@ isLoading {
     return settings["settings_pause_timer_load"] && current.state == 2;
 }
 
+reset {
+    return settings["reset_mainmenu"] && current.state == 1;
+}
+
 start {
     int newState = current.state;
     int oldState = old.state;
@@ -65,7 +72,11 @@ start {
 }
 
 update {
-    if(timer.CurrentPhase != TimerPhase.Running && vars.__old_valid_level != "") vars.__old_valid_level = ""; // Cleanup
+    if(timer.CurrentPhase != TimerPhase.Running) {
+        if(vars.__old_valid_level != "") vars.__old_valid_level = ""; // Cleanup
+    } else {
+        if(current.state == 5 || current.state == 1) vars.__old_valid_level = "DEATH"; // Death / title, prevent level split
+    }
 }
 
 split {
@@ -77,18 +88,21 @@ split {
 
         if(oldLevel != currLevel) {
             bool validLevel = !currLevel.Contains("Loading") && !currLevel.Contains("Title");
+            bool wasDEATH = vars.__old_valid_level == "DEATH";
 
             if(validLevel && currLevel != vars.__old_valid_level) {
-                print("[split level] OLD: "+ vars.__old_valid_level + " | NEW: " + currLevel);
+                if(!wasDEATH) print("[split level] OLD: "+ vars.__old_valid_level + " | NEW: " + currLevel);
+                else print("[split level] PLAYER DIED / WENT TO TITLE, NOT SPLITTING");
+
                 vars.__old_valid_level = currLevel;
-                return true;
+                return !wasDEATH;
             }
         }
     }
 
     if(settings["split_alpha_end"] && current.alphaMenuVisible != null) {
         if(current.alphaMenuVisible != old.alphaMenuVisible && current.alphaMenuVisible == 1) {
-            print("alpha end");
+            print("[split level] ALPHA ENDED");
             return true;
         }
     }
