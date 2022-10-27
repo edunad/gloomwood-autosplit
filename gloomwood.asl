@@ -1,18 +1,19 @@
 /*  Gloomwood Autosplitter
-    v0.0.6 --- By FailCake (edunad)
+    v0.0.7 --- By FailCake (edunad)
 
     GAME VERSIONS:
     - v0.1.217 = 29822976
+    - v0.1.218.15 = 29822976
 
     CHANGELOG:
-    - Improve area splitting
+    - Fix alpha menu splitting
 */
 
 
-state("Gloomwood", "0.1.217") {
+state("Gloomwood", "0.1.218.15") {
     int state : "UnityPlayer.dll", 0x01A00D40, 0xB0, 0x30, 0xFF0;
     string100 scene : "UnityPlayer.dll", 0x01A9C0F0, 0x48, 0x38;
-    int alphaMenuVisible : "UnityPlayer.dll", 0x01A986F0, 0x18, 0, 0x10, 0x220, 0x8, 0xF58;
+    int alphaMenuVisible : "UnityPlayer.dll", 0x01A55D48, 0xA40, 0xDB8, 0x288;
 }
 
 startup {
@@ -22,7 +23,7 @@ startup {
 
     settings.Add("split", true, "Splits");
     settings.Add("split_level_change", true, "Level change", "split");
-    settings.Add("split_alpha_end", true, "Alpha End", "split");
+    settings.Add("split_alpha_end", true, "[EXPERIMENTAL] Alpha End", "split");
 
     settings.Add("reset", true, "Reset");
     settings.Add("reset_mainmenu", false, "On mainmenu", "reset");
@@ -37,7 +38,7 @@ init {
     var mdlSize = vars.gameAssembly.ModuleMemorySize;
     print("[INFO] Gloomwood assembly version: " + mdlSize);
     if (mdlSize == 29822976) {
-        version = "0.1.217";
+        version = "0.1.218.15";
     } else {
         version = "UNKNOWN";
 
