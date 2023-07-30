@@ -1,17 +1,19 @@
 /*  Gloomwood Autosplitter
-    v0.0.7 --- By FailCake (edunad)
+    v0.0.8 --- By FailCake (edunad)
 
     GAME VERSIONS:
     - v0.1.217 = 29822976
     - v0.1.218.15 = 29822976
+    - v0.1.227.02 = 29822976
 
     CHANGELOG:
     - Fix alpha menu splitting
+    - Fix pointers
 */
 
 
-state("Gloomwood", "0.1.218.15") {
-    int state : "UnityPlayer.dll", 0x01A00D40, 0xB0, 0x30, 0xFF0;
+state("Gloomwood", "0.1.227.02") {
+    int state : "UnityPlayer.dll", 0x01A00D40, 0xB0, 0x30, 0xFC0;
     string100 scene : "UnityPlayer.dll", 0x01A9C0F0, 0x48, 0x38;
     int alphaMenuVisible : "UnityPlayer.dll", 0x01A55D48, 0xA40, 0xDB8, 0x288;
 }
@@ -27,6 +29,19 @@ startup {
 
     settings.Add("reset", true, "Reset");
     settings.Add("reset_mainmenu", false, "On mainmenu", "reset");
+
+    /*if (timer.CurrentTimingMethod == TimingMethod.RealTime){
+		var timingMessage = MessageBox.Show (
+			"This game uses Time without Loads (Game Time) as the main timing method.\n"+
+			"LiveSplit is currently set to show Real Time (RTA).\n"+
+			"Would you like to set the timing method to Game Time? This will make verification easier",
+			"LiveSplit | GLoomwood",
+		MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+
+		if (timingMessage == DialogResult.Yes){
+			timer.CurrentTimingMethod = TimingMethod.GameTime;
+		}
+	}*/
 }
 
 init {
@@ -37,8 +52,9 @@ init {
 
     var mdlSize = vars.gameAssembly.ModuleMemorySize;
     print("[INFO] Gloomwood assembly version: " + mdlSize);
+
     if (mdlSize == 29822976) {
-        version = "0.1.218.15";
+        version = "0.1.227.02";
     } else {
         version = "UNKNOWN";
 
@@ -67,16 +83,16 @@ start {
     int oldState = old.state;
 
     if(oldState == newState) return false;
-    if(newState < 1 || newState > 3 || oldState < 1 || oldState > 3) return false;
+    if(newState < 1 || newState > 4 || oldState < 1 || oldState > 4) return false;
 
-    return newState == 3;
+    return newState == 4;
 }
 
 update {
     if(timer.CurrentPhase != TimerPhase.Running) {
         if(vars.__old_valid_level != "") vars.__old_valid_level = ""; // Cleanup
     } else {
-        if(current.state == 5 || current.state == 1) vars.__old_valid_level = "DEATH"; // Death / title, prevent level split
+        if(current.state == 6 || current.state == 1) vars.__old_valid_level = "DEATH"; // Death / title, prevent level split
     }
 }
 

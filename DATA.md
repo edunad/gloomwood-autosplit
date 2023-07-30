@@ -3,13 +3,14 @@
 ```c#
 public enum GameStates
 {
-    None = 0,
-    Title = 1,
-    Loading = 2,
-    Playing = 3,
-    Paused = 4,
-    Death = 5,
-    Wait = 6
+	None = 0,
+	Title = 1,
+	Loading = 2,
+	Transition = 3,
+	Playing = 4,
+	Paused = 5,
+	Death = 6,
+	Wait = 7
 }
 ```
 
