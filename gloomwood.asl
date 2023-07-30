@@ -25,7 +25,7 @@ startup {
 
     settings.Add("split", true, "Splits");
     settings.Add("split_level_change", true, "Level change", "split");
-    settings.Add("split_alpha_end", true, "[EXPERIMENTAL] Alpha End", "split");
+    //settings.Add("split_alpha_end", true, "[EXPERIMENTAL] Alpha End", "split");
 
     settings.Add("reset", true, "Reset");
     settings.Add("reset_mainmenu", false, "On mainmenu", "reset");
@@ -117,12 +117,12 @@ split {
         }
     }
 
-    if(settings["split_alpha_end"] && current.alphaMenuVisible != null) {
+    /*if(settings["split_alpha_end"] && current.alphaMenuVisible != null) {
         if(current.alphaMenuVisible != old.alphaMenuVisible && current.alphaMenuVisible == 1) {
             print("[split level] ALPHA ENDED");
             return true;
         }
-    }
+    }*/
 
     return false;
 }
